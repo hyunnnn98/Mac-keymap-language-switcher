@@ -1,7 +1,7 @@
 local FRemap = require('foundation_remapping')
 local remapper = FRemap.new()
 
--- custom key mapping --------------------------------------------------------------
+-- Custom key mapping --------------------------------------------------------------
 remapper:remap('capslock', 'f18')
 remapper:remap('rightcmd', 'f17')
 ------------------------------------------------------------------------------------
@@ -12,13 +12,13 @@ remapper:remap('rightcmd', 'f17')
 -- end)
 ------------------------------------------------------------------------------------
 
--- language mapping ----------------------------------------------------------------
+-- Language mapping ----------------------------------------------------------------
 local inputEnglish = "com.apple.keylayout.ABC"
 local inputKorean = "com.apple.inputmethod.Korean.2SetKorean"
 local inputJapanese = "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"
 ------------------------------------------------------------------------------------
 
--- alert style ---------------------------------------------------------------------
+-- Alert style ---------------------------------------------------------------------
 local showSeconds = 0.5
 local cleanAlertStyle = {radius = 20, strokeColor = { white = 0, alpha = 0.3 }}
 ------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ local off_caps_mode = function()
     if input_source == inputKorean then
         hs.keycodes.currentSourceID(inputEnglish)
         language = '🇺🇸 English'
-    elseif input_source == inputEnglish then
+    elseif input_source == inputEnglish or input_source == inputJapanese then
         hs.keycodes.currentSourceID(inputKorean)
         language = '🇰🇷 Korean'
     end
@@ -59,7 +59,7 @@ local off_rightcmd_mode = function()
     if input_source == inputJapanese then
         hs.keycodes.currentSourceID(inputEnglish)
         language = '🇺🇸 English'
-    elseif input_source == inputEnglish then
+    elseif input_source == inputEnglish or input_source == inputKorean then
         hs.keycodes.currentSourceID(inputJapanese)
         language = '🇯🇵 Japanese'
     end
