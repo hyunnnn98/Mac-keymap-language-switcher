@@ -1,77 +1,35 @@
-local FRemap = require('foundation_remapping')
-local remapper = FRemap.new()
-
--- Custom key mapping --------------------------------------------------------------
-remapper:remap('capslock', 'f18')
-remapper:remap('rightcmd', 'f17')
+-- Include modules -----------------------------------------------------------------
+local ROOT_PATH = os.getenv("HOME") .. "/" .. ".hammerspoon"
+local MODULE_DIR = "modules"
+local MODULE_SUFFIX = ".lua"
 ------------------------------------------------------------------------------------
 
--- Check the name of the language currently in use ---------------------------------
--- hs.hotkey.bind({"cmd", "shift"}, "0", function ()
--- hs.alert.show(hs.keycodes.currentSourceID())
--- end)
-------------------------------------------------------------------------------------
-
--- Language mapping ----------------------------------------------------------------
-local inputEnglish = "com.apple.keylayout.ABC"
-local inputKorean = "com.apple.inputmethod.Korean.2SetKorean"
-local inputJapanese = "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"
-------------------------------------------------------------------------------------
-
--- Alert style ---------------------------------------------------------------------
-local showSeconds = 0.5
-local cleanAlertStyle = {radius = 20, strokeColor = { white = 0, alpha = 0.3 }}
-------------------------------------------------------------------------------------
-
-local caps_mode = hs.hotkey.modal.new()
-
-local on_caps_mode = function()
-    caps_mode:enter()
+local function loadModuleByName(name)
+    require(MODULE_DIR .. "." .. name)
+    hs.alert.show('Loaded module : ' .. name)
 end
 
--- Change from Korean to English ---------------------------------------------------
-local off_caps_mode = function()
-
-    caps_mode:exit()
-
-    local input_source = hs.keycodes.currentSourceID()
-
-    if input_source == inputKorean then
-        hs.keycodes.currentSourceID(inputEnglish)
-        language = '🇺🇸 English'
-    elseif input_source == inputEnglish or input_source == inputJapanese then
-        hs.keycodes.currentSourceID(inputKorean)
-        language = '🇰🇷 Korean'
+local function loadModulesByPath()
+    local files, dir = hs.fs.dir(ROOT_PATH  .. "/" .. MODULE_DIR)
+        if files == nil then
+        do return end
     end
 
-    hs.alert.closeAll()
-    hs.alert.show(language, cleanAlertStyle, showSeconds)
-end
-------------------------------------------------------------------------------------
-
--- Change from Japanese to English -------------------------------------------------
-local off_rightcmd_mode = function()
-
-    caps_mode:exit()
-
-    local input_source = hs.keycodes.currentSourceID()
-
-    if input_source == inputJapanese then
-        hs.keycodes.currentSourceID(inputEnglish)
-        language = '🇺🇸 English'
-    elseif input_source == inputEnglish or input_source == inputKorean then
-        hs.keycodes.currentSourceID(inputJapanese)
-        language = '🇯🇵 Japanese'
+    for file in files, dir do
+        if file:find(MODULE_SUFFIX .. "$") then
+            local moduleName = string.sub(file, 1, string.len(file) - string.len(MODULE_SUFFIX))
+            loadModuleByName(moduleName)
+        end
     end
-
-    hs.alert.closeAll()
-    hs.alert.show(language, cleanAlertStyle, showSeconds)
 end
-------------------------------------------------------------------------------------
 
--- Key binding ---------------------------------------------------------------------
-hs.hotkey.bind({}, 'f18', on_caps_mode, off_caps_mode)
-hs.hotkey.bind({}, 'f17', on_caps_mode, off_rightcmd_mode)
-------------------------------------------------------------------------------------
+autoReloader = hs.pathwatcher.new(ROOT_PATH, function (files)
+    for _, file in pairs(files) do
+        if file:sub(-4) == MODULE_SUFFIX then
+            hs.reload()
+            break
+        end
+    end
+end):start()
 
-remapper:register()
+loadModulesByPath()

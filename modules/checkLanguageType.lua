@@ -1,0 +1,5 @@
+-- Check the name of the language currently in use ---------------------------------
+-- hs.hotkey.bind({"cmd", "shift"}, "0", function ()
+-- hs.alert.show(hs.keycodes.currentSourceID())
+-- end)
+------------------------------------------------------------------------------------
