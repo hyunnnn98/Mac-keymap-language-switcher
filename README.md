@@ -1,31 +1,39 @@
-# Mac-keymap-language-switcher
-![language-switcher](https://user-images.githubusercontent.com/52916934/148198606-19ae7e10-0d13-4cc2-b127-ead5771a10a2.gif)
+# Mac Keymap Language Switcher
 
-Language-switcher is to solve the input delay for multi-language users in Mac OS using Hammerspoon.<br/>
-🇰🇷 `Korean` 🔄 🇺🇸 `English` key-layout and 🇯🇵 `Japanese` 🔄 🇺🇸 `English` key-layout are separated into different hot keys by `caps lock` and `right-cmd`.<br/>
+> Fast language switching tool for macOS multilingual users (KR/JP ↔ EN)
 
-## What is Hammerspoon?
-This is a tool for powerful automation of OS X. At its core, Hammerspoon is just a bridge between the operating system and a Lua scripting engine.
+![demo](https://user-images.githubusercontent.com/52916934/148198606-19ae7e10-0d13-4cc2-b127-ead5771a10a2.gif)
 
-What gives Hammerspoon its power is a set of extensions that expose specific pieces of system functionality, to the user. With these, you can write Lua scripts to control many aspects of your OS X environment.
+## Features
+- 🇰🇷 Korean ↔ 🇺🇸 English: `Caps Lock`
+- 🇯🇵 Japanese ↔ 🇺🇸 English: `Right Command`
+- Eliminates input delay when switching languages
 
+## Tech Stack
+Lua · Hammerspoon
 
-## How do I install Hammerspoon and Language-switcher?
-### 🤔 Hammerspoon
-#### Manually
- * Download the [latest release](https://github.com/Hammerspoon/hammerspoon/releases/latest)
- * Drag `Hammerspoon.app` from your `Downloads` folder to `Applications`
+## Why Hammerspoon?
+[Hammerspoon](https://www.hammerspoon.org/) is a powerful macOS automation tool that bridges Lua scripting with system APIs. It allows low-level keyboard event handling without native app development.
 
-#### Homebrew
-  * `brew install hammerspoon --cask`
+## Installation
 
-### 🤔 Language-switcher
-#### git clone
-  * `git clone https://github.com/kokomade98/Mac-keymap-language-switcher.git`
+### 1. Install Hammerspoon
+```bash
+# Homebrew
+brew install hammerspoon --cask
 
-## Getting started
-1. After installing the hammer spoon, go to `Open Config` <br/>
-2. You have to copy and paste the git cloned file `init.lua` <br/>
-3. Finally `Reload Config` and enjoy!
+# Or download manually from https://www.hammerspoon.org/
+```
 
-Feel free to open an issue if you have any questions, or open a pull request if you would like to contribute 😄
+### 2. Clone this repository
+```bash
+git clone https://github.com/hyunnnn98/Mac-keymap-language-switcher.git
+```
+
+### 3. Setup
+1. Open Hammerspoon → Click "Open Config"
+2. Copy contents of `init.lua` into the config
+3. Click "Reload Config"
+
+## Contributing
+Issues and PRs are welcome.
